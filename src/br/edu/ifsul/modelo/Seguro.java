@@ -29,6 +29,22 @@ import java.util.ArrayList;
 @Entity(name = "Seguro")
 public class Seguro implements Serializable{
 
+    public List<Sinistro> getListaSinistro() {
+        return listaSinistro;
+    }
+
+    public void setListaSinistro(List<Sinistro> listaSinistro) {
+        this.listaSinistro = listaSinistro;
+    }
+
+    public List<Cobertura> getListaCoberturas() {
+        return listaCoberturas;
+    }
+
+    public void setListaCoberturas(List<Cobertura> listaCoberturas) {
+        this.listaCoberturas = listaCoberturas;
+    }
+
     @Id
     @SequenceGenerator(name = "seq_seguro", sequenceName = "seq_seguro_id", allocationSize = 1)
     @GeneratedValue(generator = "seq_seguro", strategy = GenerationType.SEQUENCE)
@@ -164,20 +180,20 @@ public class Seguro implements Serializable{
     
     public void adicionarSinistro(Sinistro obj){
         obj.setSeguro(this);
-        this.listaSinistro.add(obj);
+        this.getListaSinistro().add(obj);
     }
     
     public void removerSinistro(int index){
-        this.listaSinistro.remove(index);
+        this.getListaSinistro().remove(index);
     }
     
     public void adicionarCobertura(Cobertura obj){
         obj.setSeguro(this);
-        this.listaCoberturas.add(obj);
+        this.getListaCoberturas().add(obj);
     }
     
     public void removerCobertura(int index){
-        this.listaCoberturas.remove(index);
+        this.getListaCoberturas().remove(index);
     }
     
     
