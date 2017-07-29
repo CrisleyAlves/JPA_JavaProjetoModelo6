@@ -1,13 +1,18 @@
 package br.edu.ifsul.modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
@@ -58,6 +63,20 @@ public class Carro implements Serializable{
     @JoinColumn(name = "pessoa", referencedColumnName = "id", nullable = false)
     @ForeignKey(name = "fk_pessoa")
     private Pessoa pessoa;
+    
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "carro_acessorio", 
+            joinColumns = @JoinColumn(
+                    name = "carro", 
+                    referencedColumnName = "id", 
+                    nullable = false),
+            inverseJoinColumns = @JoinColumn(
+                    name = "acessorio", 
+                    referencedColumnName = "id", 
+                    nullable = false)
+    )
+    private List<Acessorio> acessorios = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -147,7 +166,13 @@ public class Carro implements Serializable{
         }
         return true;
     }
-      
-    
+
+    public List<Acessorio> getAcessorios() {
+        return acessorios;
+    }
+
+    public void setAcessorios(List<Acessorio> acessorios) {
+        this.acessorios = acessorios;
+    }
     
 }
